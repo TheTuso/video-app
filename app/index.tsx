@@ -1,24 +1,19 @@
 import { Image } from 'expo-image';
 import { openURL } from 'expo-linking';
+import { navigate } from 'expo-router/build/global-state/routing';
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '@/components/ui/button';
 import { Typography } from '@/components/ui/typography';
 import { COLORS } from '@/utils/colors';
+import Logo from '@/components/icons/Logo';
+import AppIcon from '@/components/icons/AppIcon';
 
-export default function Index() {
+export default function LoginScreen() {
 	return (
 		<SafeAreaView style={styles.container}>
-			<Image
-				source={require('../assets/images/logo.svg')}
-				style={styles.logo}
-				contentFit="contain"
-			/>
-			<Image
-				source={require('../assets/images/app-icon.svg')}
-				style={styles.icon}
-				contentFit="contain"
-			/>
+			<Logo />
+			<AppIcon />
 			<View style={styles.bottomContainer}>
 				<Typography
 					font="Poppins_600SemiBold"
@@ -28,7 +23,7 @@ export default function Index() {
 				>
 					Welcome to the best YouTube-based learning application.
 				</Typography>
-				<Button fullWidth>
+				<Button fullWidth onPress={() => navigate('/(tabs)')}>
 					<Typography
 						font="Poppins_600SemiBold"
 						color={COLORS.foregroundSecondary}
@@ -83,14 +78,6 @@ const styles = StyleSheet.create({
 	},
 	linksContainer: {
 		width: 264,
-	},
-	logo: {
-		height: 116,
-		width: 292,
-	},
-	icon: {
-		width: 128,
-		aspectRatio: 1,
 	},
 	underline: {
 		textDecorationLine: 'underline',

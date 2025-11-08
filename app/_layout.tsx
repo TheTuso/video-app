@@ -3,6 +3,7 @@ import { Stack } from 'expo-router';
 import { hideAsync, preventAutoHideAsync } from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { FONTS } from '@/utils/fonts';
+import { StatusBar } from 'expo-status-bar';
 
 // Prevent the splash screen from auto-hiding before assets have loaded.
 preventAutoHideAsync();
@@ -21,5 +22,10 @@ export default function RootLayout() {
 		return null;
 	}
 
-	return <Stack screenOptions={{ headerShown: false }} />;
+	return (
+		<>
+			<Stack screenOptions={{ headerShown: false }} />
+			<StatusBar style="light" />
+		</>
+	);
 }
