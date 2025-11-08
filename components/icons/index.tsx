@@ -1,0 +1,16 @@
+export { default as AirplayIcon } from "./AirplayIcon";
+export { default as BackwardIcon } from "./BackwardIcon";
+export { default as ClockIcon } from "./ClockIcon";
+export { default as ForwardIcon } from "./ForwardIcon";
+export { default as FullscreenIcon } from "./FullscreenIcon";
+export { default as HomeIcon } from "./HomeIcon";
+export { default as LeftarrowIcon } from "./LeftarrowIcon";
+export { default as LikesIcon } from "./LikesIcon";
+export { default as NotificationIcon } from "./NotificationIcon";
+export { default as PauseIcon } from "./PauseIcon";
+export { default as PersonIcon } from "./PersonIcon";
+export { default as PlayIcon } from "./PlayIcon";
+export { default as SearchIcon } from "./SearchIcon";
+export { default as SettingsIcon } from "./SettingsIcon";
+export { default as ViewsIcon } from "./ViewsIcon";
+export { default as VolumeIcon } from "./VolumeIcon";
