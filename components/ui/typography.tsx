@@ -1,21 +1,30 @@
 import { Text, type TextProps } from 'react-native';
-import type { COLORS } from '@/utils/colors';
+import { COLORS } from '@/utils/colors';
 import type { FONTS } from '@/utils/fonts';
 
 interface TypographyProps extends TextProps {
 	font?: keyof typeof FONTS;
-	color?: keyof typeof COLORS | string;
+	color?: string;
 }
 
 export function Typography({
 	font = 'Poppins_400Regular',
-	color = 'foregroundPrimary',
+	color = COLORS.foregroundPrimary,
 	children,
 	style,
 	...props
 }: TypographyProps) {
 	return (
-		<Text {...props} style={[style, { fontFamily: font, color }]}>
+		<Text
+			{...props}
+			style={[
+				style,
+				{
+					fontFamily: font,
+					color,
+				},
+			]}
+		>
 			{children}
 		</Text>
 	);
