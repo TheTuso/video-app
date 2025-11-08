@@ -1,15 +1,19 @@
-import { Text, type TextProps } from 'react-native';
+import { StyleSheet, Text, type TextProps } from 'react-native';
 import { COLORS } from '@/utils/colors';
 import type { FONTS } from '@/utils/fonts';
 
 interface TypographyProps extends TextProps {
 	font?: keyof typeof FONTS;
 	color?: string;
+	size?: keyof typeof sizes;
+	align?: 'left' | 'center' | 'right' | 'justify';
 }
 
 export function Typography({
 	font = 'Poppins_400Regular',
 	color = COLORS.foregroundPrimary,
+	size = 'body',
+	align = 'left',
 	children,
 	style,
 	...props
@@ -18,14 +22,33 @@ export function Typography({
 		<Text
 			{...props}
 			style={[
-				style,
 				{
 					fontFamily: font,
+					textAlign: align,
 					color,
 				},
+				sizes[size],
+				style,
 			]}
 		>
 			{children}
 		</Text>
 	);
 }
+
+const sizes = StyleSheet.create({
+	title: {
+		fontSize: 22,
+		lineHeight: 24,
+		letterSpacing: 0.01,
+	},
+	body: {
+		fontSize: 13,
+		lineHeight: 16,
+	},
+	largeButton: {
+		fontSize: 16,
+		lineHeight: 24,
+		letterSpacing: 0.01,
+	},
+});
