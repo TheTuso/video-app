@@ -1,4 +1,3 @@
-import { Image } from 'expo-image';
 import { openURL } from 'expo-linking';
 import { navigate } from 'expo-router/build/global-state/routing';
 import { StyleSheet, View } from 'react-native';
@@ -44,12 +43,14 @@ export default function LoginScreen() {
 							onPress={() =>
 								openURL('https://example.com/terms-and-conditions')
 							}
+							align="center"
 							underline
 						>
 							Terms and Conditions
 						</Typography>{' '}
 						and{' '}
 						<Typography
+							align="center"
 							onPress={() => openURL('https://example.com/privacy-policy')}
 							underline
 						>
