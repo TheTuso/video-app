@@ -41,17 +41,17 @@ export default function LoginScreen() {
 					>
 						By continuing you agree with{'\n'}
 						<Typography
-							style={styles.underline}
 							onPress={() =>
 								openURL('https://example.com/terms-and-conditions')
 							}
+							underline
 						>
 							Terms and Conditions
 						</Typography>{' '}
 						and{' '}
 						<Typography
-							style={styles.underline}
 							onPress={() => openURL('https://example.com/privacy-policy')}
+							underline
 						>
 							Privacy Policy
 						</Typography>
@@ -78,8 +78,5 @@ const styles = StyleSheet.create({
 	},
 	linksContainer: {
 		width: 264,
-	},
-	underline: {
-		textDecorationLine: 'underline',
 	},
 });

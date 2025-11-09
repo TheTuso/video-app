@@ -7,6 +7,7 @@ interface TypographyProps extends TextProps {
 	color?: string;
 	size?: keyof typeof sizes;
 	align?: 'left' | 'center' | 'right' | 'justify';
+	underline?: boolean;
 }
 
 export function Typography({
@@ -14,6 +15,7 @@ export function Typography({
 	color = COLORS.foregroundPrimary,
 	size = 'body',
 	align = 'left',
+	underline = false,
 	children,
 	style,
 	...props
@@ -25,6 +27,7 @@ export function Typography({
 				{
 					fontFamily: font,
 					textAlign: align,
+					textDecorationLine: underline ? 'underline' : 'none',
 					color,
 				},
 				sizes[size],
@@ -48,6 +51,11 @@ const sizes = StyleSheet.create({
 	},
 	largeButton: {
 		fontSize: 16,
+		lineHeight: 24,
+		letterSpacing: 0.01,
+	},
+	section: {
+		fontSize: 18,
 		lineHeight: 24,
 		letterSpacing: 0.01,
 	},
