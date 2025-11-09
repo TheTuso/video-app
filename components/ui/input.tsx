@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
 		paddingVertical: 10,
 		paddingHorizontal: 12,
 		gap: 12,
+		flex: 1,
 	},
 	input: {
 		fontFamily: 'Poppins_400Regular',
