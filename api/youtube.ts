@@ -9,6 +9,7 @@ const api = {
 			buildUrl('/search', {
 				part: 'snippet',
 				type: 'video',
+				videoCategoryId: '28', // 28 is a Science & Technology category for the PL region
 				order,
 				q: query,
 				pageToken: page,
@@ -21,6 +22,7 @@ export async function searchVideos(
 	order: 'date' | 'viewCount',
 	page?: string,
 ) {
+	console.log(api.v3.search(query, order, page));
 	const response = await fetch(api.v3.search(query, order, page));
 	if (!response.ok) throw new Error('Failed to fetch videos');
 	return response.json();
@@ -40,7 +42,10 @@ function buildUrl(
 		throw new Error('API_URL or API_KEY is not defined');
 	}
 
-	const url = new URL(path, API_URL);
+	// Append path to API_URL preserving the base path
+	const baseUrl = API_URL.endsWith('/') ? API_URL.slice(0, -1) : API_URL;
+	const cleanPath = path.startsWith('/') ? path : `/${path}`;
+	const url = new URL(`${baseUrl}${cleanPath}`);
 	const search = new URLSearchParams();
 
 	Object.entries(params).forEach(([k, v]) => {
