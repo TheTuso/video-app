@@ -3,17 +3,17 @@ import { openURL } from 'expo-linking';
 import { navigate } from 'expo-router/build/global-state/routing';
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import AppIcon from '@/components/icons/AppIcon';
+import Logo from '@/components/icons/Logo';
 import { Button } from '@/components/ui/button';
 import { Typography } from '@/components/ui/typography';
 import { COLORS } from '@/utils/colors';
-import Logo from '@/components/icons/Logo';
-import AppIcon from '@/components/icons/AppIcon';
 
 export default function LoginScreen() {
 	return (
 		<SafeAreaView style={styles.container}>
-			<Logo />
-			<AppIcon />
+			<Logo width={253} height={77} />
+			<AppIcon width={128} height={128} />
 			<View style={styles.bottomContainer}>
 				<Typography
 					font="Poppins_600SemiBold"

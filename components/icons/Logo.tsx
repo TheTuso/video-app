@@ -4,9 +4,8 @@ import type { SvgProps } from "react-native-svg";
 const SvgLogo = (props: SvgProps) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
-    width={292}
-    height={116}
     fill="none"
+    viewBox="0 0 292 116"
     {...props}
   >
     <Path

@@ -22,7 +22,9 @@ export default function TabsLayout() {
 						options={{
 							headerShown: false,
 							title: 'Home',
-							tabBarIcon: ({ color }) => <HomeIcon color={color} width={32} />,
+							tabBarIcon: ({ color }) => (
+								<HomeIcon color={color} width={32} height={32} />
+							),
 							tabBarLabel: ({ children, color }) => (
 								<Typography size="largeButton" color={color}>
 									{children}
@@ -36,7 +38,7 @@ export default function TabsLayout() {
 							headerShown: false,
 							title: 'Search',
 							tabBarIcon: ({ color }) => (
-								<SearchIcon color={color} width={32} />
+								<SearchIcon color={color} width={32} height={32} />
 							),
 							tabBarLabel: ({ children, color }) => (
 								<Typography size="largeButton" color={color}>
