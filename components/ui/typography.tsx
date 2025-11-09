@@ -59,4 +59,9 @@ const sizes = StyleSheet.create({
 		lineHeight: 24,
 		letterSpacing: 0.01,
 	},
+	label: {
+		fontSize: 12,
+		lineHeight: 24,
+		letterSpacing: 0.01,
+	},
 });
