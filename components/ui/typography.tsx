@@ -8,6 +8,7 @@ interface TypographyProps extends TextProps {
 	size?: keyof typeof sizes;
 	align?: 'left' | 'center' | 'right' | 'justify';
 	underline?: boolean;
+	truncate?: number;
 }
 
 export function Typography({
@@ -16,12 +17,14 @@ export function Typography({
 	size = 'body',
 	align = 'left',
 	underline = false,
+	truncate,
 	children,
 	style,
 	...props
 }: TypographyProps) {
 	return (
 		<Text
+			numberOfLines={truncate}
 			{...props}
 			style={[
 				{
@@ -61,6 +64,21 @@ const sizes = StyleSheet.create({
 	},
 	label: {
 		fontSize: 12,
+		lineHeight: 24,
+		letterSpacing: 0.01,
+	},
+	smallVideoTitle: {
+		fontSize: 12,
+		lineHeight: 13,
+		letterSpacing: 0.01,
+	},
+	largeVideoTitle: {
+		fontSize: 15,
+		lineHeight: 16,
+		letterSpacing: 0.01,
+	},
+	date: {
+		fontSize: 10,
 		lineHeight: 24,
 		letterSpacing: 0.01,
 	},
