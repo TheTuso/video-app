@@ -1,43 +1,44 @@
 {
-	"expo": {
-		"name": "video-app",
-		"slug": "video-app",
-		"version": "1.0.0",
-		"orientation": "portrait",
-		"icon": "./assets/images/app-icon.png",
-		"scheme": "videoapp",
-		"userInterfaceStyle": "automatic",
-		"newArchEnabled": true,
-		"ios": {
-			"supportsTablet": true,
-			"bundleIdentifier": "com.pasztor.video-app"
-		},
-		"android": {
-			"adaptiveIcon": {
-				"backgroundColor": "#8D99AE",
-				"foregroundImage": "./assets/images/app-icon.png"
-			},
-			"edgeToEdgeEnabled": true,
-			"predictiveBackGestureEnabled": false
-		},
-		"web": {
-			"output": "static"
-		},
-		"plugins": [
-			"expo-router",
-			[
-				"expo-splash-screen",
-				{
-					"image": "./assets/images/logo.png",
-					"imageWidth": 200,
-					"resizeMode": "contain",
-					"backgroundColor": "#8D99AE"
-				}
-			]
-		],
-		"experiments": {
-			"typedRoutes": true,
-			"reactCompiler": true
-		}
-	}
+  "expo": {
+    "name": "video-app",
+    "slug": "video-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/app-icon.png",
+    "scheme": "videoapp",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.pasztor.video-app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#8D99AE",
+        "foregroundImage": "./assets/images/app-icon.png"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "package": "com.pasztor.videoapp"
+    },
+    "web": {
+      "output": "static"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/logo.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#8D99AE"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
 }
