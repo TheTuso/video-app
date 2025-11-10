@@ -57,6 +57,11 @@ const sizes = StyleSheet.create({
 		lineHeight: 24,
 		letterSpacing: 0.01,
 	},
+	smallButton: {
+		fontSize: 10,
+		lineHeight: 12,
+		letterSpacing: 0.01,
+	},
 	section: {
 		fontSize: 18,
 		lineHeight: 24,
