@@ -7,9 +7,9 @@ import { Input } from '@/components/ui/input';
 import { Typography } from '@/components/ui/typography';
 import { VideoCard } from '@/components/video/video-card';
 import { useDebounce } from '@/hooks/use-debounce';
+import { useSearchVideos } from '@/hooks/use-search-videos';
+import type { SnippetWithId } from '@/types/videos';
 import { COLORS } from '@/utils/colors';
-import {useSearchVideos} from "@/hooks/use-search-videos";
-import type {SnippetWithId} from "@/types/videos";
 
 export default function Search() {
 	const { query } = useLocalSearchParams();
@@ -17,21 +17,23 @@ export default function Search() {
 		Array.isArray(query) ? query.join(' ') : query,
 	);
 	const debouncedValue = useDebounce(value, 500);
-  const { data, isLoading, isError, error, fetchNextPage } = useSearchVideos(debouncedValue)
+	const { data, isLoading, isError, error, fetchNextPage } =
+		useSearchVideos(debouncedValue);
 
 	// Update the value when the query changes
 	useEffect(() => {
 		setValue(Array.isArray(query) ? query.join(' ') : query);
 	}, [query]);
 
-  const videos = data?.pages.flatMap((page) =>
-    page.items.map((item) => {
-      return {
-        id: item.id.videoId,
-        ...item.snippet,
-      } as SnippetWithId;
-    }),
-  ) ?? [];
+	const videos =
+		data?.pages.flatMap((page) =>
+			page.items.map((item) => {
+				return {
+					id: item.id.videoId,
+					...item.snippet,
+				} as SnippetWithId;
+			}),
+		) ?? [];
 
 	return (
 		<View style={styles.container}>
@@ -49,7 +51,7 @@ export default function Search() {
 					}
 				/>
 				<Typography size="small">
-          {data?.pages[0]?.pageInfo.totalResults ?? 0} results found for: {'"'}
+					{data?.pages[0]?.pageInfo.totalResults ?? 0} results found for: {'"'}
 					<Typography size="small" font="Poppins_600SemiBold">
 						{value}
 					</Typography>
@@ -66,15 +68,22 @@ export default function Search() {
 					</Typography>
 				</Typography>
 			</View>
-      {isError && <EmptyState message={error.message} />}
 			{videos.length === 0 ? (
-				<EmptyState message={isLoading ? "Loading your videos" : "Nothing here yet, search videos"} />
+				<EmptyState
+					message={
+						isLoading
+							? 'Loading your videos'
+							: isError
+								? error.message
+								: 'Nothing here yet, search videos'
+					}
+				/>
 			) : (
 				<FlatList
 					style={styles.list}
 					data={videos}
-          keyExtractor={(item, index) => `${item}-${index}`}
-          onEndReached={() => fetchNextPage()}
+					keyExtractor={(item, index) => `${item}-${index}`}
+					onEndReached={() => fetchNextPage()}
 					renderItem={({ item }) => (
 						<View style={styles.item}>
 							<VideoCard
