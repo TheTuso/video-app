@@ -23,6 +23,7 @@ interface RadioProps {
 export function Radio({ option, selected = false, onSelect }: RadioProps) {
 	const opacity = useSharedValue(selected ? 1 : 0);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: we need only selected here
 	useEffect(() => {
 		opacity.value = withTiming(selected ? 1 : 0, {
 			duration: 250,
