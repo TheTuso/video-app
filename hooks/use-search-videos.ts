@@ -9,6 +9,7 @@ export function useSearchVideos(query: string, order?: 'date' | 'viewCount') {
 			searchVideos(query, order ?? 'viewCount', pageParam as string),
 		initialPageParam: '',
 		staleTime: 1000 * 60 * 60,
+		enabled: !!query,
 		getNextPageParam: ({ nextPageToken }) => nextPageToken,
 	});
 }
