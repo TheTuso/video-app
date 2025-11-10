@@ -1,11 +1,11 @@
 import { FlatList, StyleSheet, View } from 'react-native';
 import { ListSkeleton } from '@/components/skeletons/list-skeleton';
-import { Typography } from '@/components/ui/typography';
 import { SectionHeader } from '@/components/video/seciton-header';
 import { VideoCard } from '@/components/video/video-card';
 import { useSearchVideos } from '@/hooks/use-search-videos';
 import type { SnippetWithId } from '@/types/videos';
 import { COLORS } from '@/utils/colors';
+import {EmptyState} from "@/components/ui/empty-state";
 
 interface VideosSectionProps {
 	title: string;
@@ -16,8 +16,6 @@ export function VideosSection({ title }: VideosSectionProps) {
 		normalizeQuery(title),
 	);
 
-	if (isError) return <Typography>{error.message}</Typography>;
-
 	const videos = data?.pages.flatMap((page) =>
 		page.items.map((item) => {
 			return {
@@ -25,12 +23,13 @@ export function VideosSection({ title }: VideosSectionProps) {
 				...item.snippet,
 			} as SnippetWithId;
 		}),
-	);
+	) ?? [];
 
 	return (
 		<View style={styles.section}>
 			<View style={styles.sectionContent}>
 				<SectionHeader title={title} />
+        {isError && <EmptyState message={error.message}/>}
 				{isLoading ? (
 					<ListSkeleton />
 				) : (
