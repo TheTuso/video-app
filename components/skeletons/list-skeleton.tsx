@@ -1,26 +1,23 @@
-import { FlatList, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Skeleton } from '@/components/skeletons/skeleton';
 
 export function ListSkeleton() {
 	return (
-		<FlatList
-			style={styles.list}
-			horizontal
-			data={Array.from({ length: 5 }).map(() => ({}))}
-			renderItem={() => (
-				<View style={styles.item}>
+		<View style={styles.container}>
+			{Array.from([0, 1]).map((index) => (
+				<View key={`s-${index}`} style={styles.item}>
 					<Skeleton style={styles.skeleton} />
 					<Skeleton style={styles.skeletonTitle} />
 					<Skeleton style={[styles.skeletonTitle, styles.skeletonDate]} />
 				</View>
-			)}
-		/>
+			))}
+		</View>
 	);
 }
 
 const styles = StyleSheet.create({
-	list: {
-		paddingVertical: 8,
+	container: {
+		flexDirection: 'row',
 	},
 	item: {
 		marginLeft: 18,

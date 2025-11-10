@@ -3,7 +3,6 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import Animated, {
 	useAnimatedStyle,
 	useSharedValue,
-	withSpring,
 	withTiming,
 } from 'react-native-reanimated';
 import { Typography } from '@/components/ui/typography';

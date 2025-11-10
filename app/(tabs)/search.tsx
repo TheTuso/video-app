@@ -7,6 +7,7 @@ import Animated, {
 	withTiming,
 } from 'react-native-reanimated';
 import { SearchIcon } from '@/components/icons';
+import { VideoSkeleton } from '@/components/skeletons/video-skeleton';
 import { EmptyState } from '@/components/ui/empty-state';
 import { Input } from '@/components/ui/input';
 import type { RadioOption } from '@/components/ui/radio';
@@ -128,15 +129,22 @@ export default function Search() {
 					</View>
 				)}
 				ListEmptyComponent={
-					<EmptyState
-						message={
-							isLoading
-								? 'Loading your videos'
-								: isError
-									? error.message
-									: 'Nothing here yet, search videos'
-						}
-					/>
+					!isLoading ? (
+						<EmptyState
+							message={
+								isError ? error.message : 'Nothing here yet, search videos'
+							}
+						/>
+					) : null
+				}
+				ListFooterComponent={() =>
+					isLoading ? (
+						<View style={styles.item}>
+							{Array.from([0, 1, 2, 3]).map((index) => (
+								<VideoSkeleton key={`s-${index}`} />
+							))}
+						</View>
+					) : null
 				}
 			/>
 			<SortingModal
