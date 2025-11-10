@@ -1,4 +1,5 @@
 import { StyleSheet, View } from 'react-native';
+import { COLORS } from '@/utils/colors';
 
 interface ProgressProps {
 	progress?: `${number}%`;
@@ -15,17 +16,17 @@ export function Progress({ progress = '0%' }: ProgressProps) {
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: '#C8C8C8',
+		backgroundColor: COLORS.progressBarBackground,
 		height: 4,
 		width: '100%',
 		flexDirection: 'row',
 	},
 	progress: {
-		backgroundColor: '#C71F1F',
+		backgroundColor: COLORS.progressBar,
 		height: '100%',
 	},
 	circle: {
-		backgroundColor: '#C71F1F',
+		backgroundColor: COLORS.progressBar,
 		width: 12,
 		aspectRatio: 1,
 		borderRadius: 6,
