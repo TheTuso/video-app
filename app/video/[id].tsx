@@ -1,11 +1,23 @@
 import { useLocalSearchParams } from 'expo-router';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import {
+	Animated,
+	Pressable,
+	ScrollView,
+	StyleSheet,
+	View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Video from 'react-native-video';
+import Video, {
+	type OnLoadData,
+	type OnProgressData,
+	type VideoRef,
+} from 'react-native-video';
 import { PersonIcon } from '@/components/icons';
 import { EmptyState } from '@/components/ui/empty-state';
 import { Tabs } from '@/components/ui/tabs';
 import { Typography } from '@/components/ui/typography';
+import { Controls } from '@/components/video/controls';
 import { VideoDetails } from '@/components/video/video-details';
 import { useVideoDetails } from '@/hooks/use-video-details';
 import { COLORS } from '@/utils/colors';
@@ -15,19 +27,88 @@ export default function VideoScreen() {
 	const { data, isLoading, isError, error } = useVideoDetails(
 		Array.isArray(id) ? id.join('') : id,
 	);
+	const videoRef = useRef<VideoRef>(null);
+	const hideControlsTimeoutRef = useRef<number | null>(null);
+	const opacityAnim = useRef(new Animated.Value(1)).current;
+	const [videoDuration, setVideoDuration] = useState<number>(0);
+	const [currentTime, setCurrentTime] = useState<number>(0);
+	const [isPlaying, setIsPlaying] = useState<boolean>(true);
+	const [isMuted, setIsMuted] = useState<boolean>(false);
+	const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
+	const [showControls, setShowControls] = useState<boolean>(false);
+
+	useEffect(() => {
+		Animated.timing(opacityAnim, {
+			toValue: showControls ? 0.5 : 1,
+			duration: 100,
+			useNativeDriver: true,
+		}).start();
+	}, [showControls, opacityAnim]);
 
 	if (!data || isLoading) return <EmptyState message="Loading video..." />;
 
 	if (isError && error) return <EmptyState message={error.message} />;
 
+	const onLoad = (data: OnLoadData) => {
+		setVideoDuration(data.duration);
+		videoRef.current?.seek(0);
+	};
+
+	const onProgress = (data: OnProgressData) => {
+		setCurrentTime(data.currentTime);
+	};
+
+	const seek = (time: number) => {
+		videoRef.current?.seek(time);
+		setCurrentTime(time);
+	};
+
+	const toggleControls = () => {
+		// Clear any existing timeout
+		if (hideControlsTimeoutRef.current) {
+			clearTimeout(hideControlsTimeoutRef.current);
+		}
+
+		setShowControls((prev) => !prev);
+
+		// Set new timeout and store reference
+		hideControlsTimeoutRef.current = setTimeout(() => {
+			setShowControls(false);
+			hideControlsTimeoutRef.current = null;
+		}, 3000);
+	};
+
 	return (
 		<SafeAreaView edges={['top', 'bottom']} style={styles.container}>
-			<Video
-				style={styles.video}
-				source={require('@/assets/video/broadchurch.mp4')}
-				muted
-				controls
-			/>
+			<Pressable onPress={toggleControls}>
+				<Animated.View style={{ opacity: opacityAnim }}>
+					<Video
+						ref={videoRef}
+						style={styles.video}
+						source={require('@/assets/video/broadchurch.mp4')}
+						onLoad={onLoad}
+						onProgress={onProgress}
+						paused={!isPlaying}
+						muted={isMuted}
+						fullscreen={isFullScreen}
+						onFullscreenPlayerWillDismiss={() => setIsFullScreen(false)}
+						onEnd={() => {
+							setShowControls(true);
+						}}
+					/>
+				</Animated.View>
+			</Pressable>
+			{showControls && (
+				<Controls
+					currentTime={currentTime}
+					duration={videoDuration}
+					onPlayPause={() => setIsPlaying((prev) => !prev)}
+					onMute={() => setIsMuted((prev) => !prev)}
+					onFullscreen={() => setIsFullScreen((prev) => !prev)}
+					onBackward={() => seek(currentTime - 5)}
+					onForward={() => seek(currentTime + 5)}
+				/>
+			)}
 			<ScrollView style={styles.content}>
 				<Typography truncate={1} font="Poppins_600SemiBold" size="section">
 					{data.snippet.localized.title}
@@ -77,7 +158,6 @@ const styles = StyleSheet.create({
 	},
 	content: {
 		padding: 16,
-		// full height
 		flex: 1,
 	},
 	icon: {
