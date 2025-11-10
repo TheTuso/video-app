@@ -24,7 +24,6 @@ export async function searchVideos(
 	order: SortOption,
 	page?: string,
 ) {
-	console.log(api.v3.search(query, order, page)); // TODO: remove
 	const response = await fetch(api.v3.search(query, order, page));
 	if (!response.ok) throw new Error('Failed to fetch videos');
 	return response.json();
