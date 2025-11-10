@@ -63,3 +63,5 @@ export interface VideoDetailsResponse {
 	etag: string;
 	items: VideoDetails[];
 }
+
+export type SortOption = 'date' | 'viewCount' | 'relevance';

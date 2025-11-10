@@ -1,15 +1,37 @@
 import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
+import Animated, {
+	useAnimatedStyle,
+	useSharedValue,
+	withTiming,
+} from 'react-native-reanimated';
 import { SearchIcon } from '@/components/icons';
 import { EmptyState } from '@/components/ui/empty-state';
 import { Input } from '@/components/ui/input';
+import type { RadioOption } from '@/components/ui/radio';
+import { SortingModal } from '@/components/ui/sorting-modal';
 import { Typography } from '@/components/ui/typography';
 import { VideoCard } from '@/components/video/video-card';
 import { useDebounce } from '@/hooks/use-debounce';
 import { useSearchVideos } from '@/hooks/use-search-videos';
-import type { SnippetWithId } from '@/types/videos';
+import type { SnippetWithId, SortOption } from '@/types/videos';
 import { COLORS } from '@/utils/colors';
+
+const OPTIONS: RadioOption[] = [
+	{
+		name: 'Upload date: latest',
+		value: 'date',
+	},
+	{
+		name: 'Upload date: oldest',
+		value: 'relevance',
+	},
+	{
+		name: 'Most popular',
+		value: 'viewCount',
+	},
+];
 
 export default function Search() {
 	const { query } = useLocalSearchParams();
@@ -17,13 +39,26 @@ export default function Search() {
 		Array.isArray(query) ? query.join(' ') : query,
 	);
 	const debouncedValue = useDebounce(value, 500);
-	const { data, isLoading, isError, error, fetchNextPage } =
-		useSearchVideos(debouncedValue);
+	const [showModal, setShowModal] = useState(false);
+	const [orderBy, setOrderBy] = useState<string>('viewCount');
+	const { data, isLoading, isError, error, fetchNextPage } = useSearchVideos(
+		debouncedValue,
+		orderBy as SortOption,
+	);
+
+	// Animated opacity
+	const opacity = useSharedValue(1);
 
 	// Update the value when the query changes
 	useEffect(() => {
 		setValue(Array.isArray(query) ? query.join(' ') : query);
 	}, [query]);
+
+	// Animate opacity when modal visibility changes
+	// biome-ignore lint/correctness/useExhaustiveDependencies: we need only showModal here
+	useEffect(() => {
+		opacity.value = withTiming(showModal ? 0.1 : 1, { duration: 250 });
+	}, [showModal]);
 
 	const videos =
 		data?.pages.flatMap((page) =>
@@ -35,8 +70,14 @@ export default function Search() {
 			}),
 		) ?? [];
 
+	const animatedStyle = useAnimatedStyle(() => {
+		return {
+			opacity: opacity.value,
+		};
+	});
+
 	return (
-		<View style={styles.container}>
+		<Animated.View style={[styles.container, animatedStyle]}>
 			<View style={styles.header}>
 				<Input
 					placeholder="Search videos"
@@ -60,45 +101,52 @@ export default function Search() {
 				<Typography
 					size="label"
 					align="right"
-					onPress={() => alert('open modal')} // https://docs.expo.dev/versions/latest/sdk/checkbox/
+					onPress={() => setShowModal((prev) => !prev)} // https://docs.expo.dev/versions/latest/sdk/checkbox/
 				>
 					Sort by:{' '}
 					<Typography size="label" font="Poppins_600SemiBold">
-						Most popular
+						{OPTIONS.find((option) => option.value === orderBy)?.name ?? 'x'}
 					</Typography>
 				</Typography>
 			</View>
-			{videos.length === 0 ? (
-				<EmptyState
-					message={
-						isLoading
-							? 'Loading your videos'
-							: isError
-								? error.message
-								: 'Nothing here yet, search videos'
-					}
-				/>
-			) : (
-				<FlatList
-					style={styles.list}
-					data={videos}
-					keyExtractor={(item, index) => `${item}-${index}`}
-					onEndReached={() => fetchNextPage()}
-					renderItem={({ item }) => (
-						<View style={styles.item}>
-							<VideoCard
-								id={item.id}
-								title={item.title}
-								publishedAt={item.publishedAt}
-								thumbnail={item.thumbnails.high.url}
-								channelName={item.channelTitle}
-								variant="large"
-							/>
-						</View>
-					)}
-				/>
-			)}
-		</View>
+
+			<FlatList
+				style={styles.list}
+				data={videos}
+				keyExtractor={(item, index) => `${item}-${index}`}
+				onEndReached={() => fetchNextPage()}
+				renderItem={({ item }) => (
+					<View style={styles.item}>
+						<VideoCard
+							id={item.id}
+							title={item.title}
+							publishedAt={item.publishedAt}
+							thumbnail={item.thumbnails.high.url}
+							channelName={item.channelTitle}
+							variant="large"
+						/>
+					</View>
+				)}
+				ListEmptyComponent={
+					<EmptyState
+						message={
+							isLoading
+								? 'Loading your videos'
+								: isError
+									? error.message
+									: 'Nothing here yet, search videos'
+						}
+					/>
+				}
+			/>
+			<SortingModal
+				options={OPTIONS}
+				visible={showModal}
+				onClose={() => setShowModal(false)}
+				selectedOption={orderBy}
+				onSubmit={setOrderBy}
+			/>
+		</Animated.View>
 	);
 }
 

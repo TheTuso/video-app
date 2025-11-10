@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import { PlayIcon } from '@/components/icons';
 import { Typography } from '@/components/ui/typography';
-import {COLORS} from "@/utils/colors";
+import { COLORS } from '@/utils/colors';
 
 interface EmptyStateProps {
 	message?: string;

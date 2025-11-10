@@ -82,4 +82,8 @@ const sizes = StyleSheet.create({
 		lineHeight: 24,
 		letterSpacing: 0.01,
 	},
+	radio: {
+		fontSize: 14,
+		letterSpacing: 0.01,
+	},
 });

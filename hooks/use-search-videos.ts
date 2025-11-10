@@ -1,10 +1,10 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { searchVideos } from '@/api/youtube';
-import type { SearchVideosResponse } from '@/types/videos';
+import type { SearchVideosResponse, SortOption } from '@/types/videos';
 
-export function useSearchVideos(query: string, order?: 'date' | 'viewCount') {
+export function useSearchVideos(query: string, order?: SortOption) {
 	return useInfiniteQuery<SearchVideosResponse>({
-		queryKey: ['videos', query],
+		queryKey: ['videos', query, order],
 		queryFn: ({ pageParam }) =>
 			searchVideos(query, order ?? 'viewCount', pageParam as string),
 		initialPageParam: '',

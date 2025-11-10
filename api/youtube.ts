@@ -1,3 +1,5 @@
+import type { SortOption } from '@/types/videos';
+
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
 
@@ -5,7 +7,7 @@ const api = {
 	v3: {
 		videos: (id: string) =>
 			buildUrl('/videos', { part: 'snippet,statistics', id }),
-		search: (query: string, order: 'date' | 'viewCount', page?: string) =>
+		search: (query: string, order: SortOption, page?: string) =>
 			buildUrl('/search', {
 				part: 'snippet',
 				type: 'video',
@@ -19,10 +21,10 @@ const api = {
 
 export async function searchVideos(
 	query: string,
-	order: 'date' | 'viewCount',
+	order: SortOption,
 	page?: string,
 ) {
-	console.log(api.v3.search(query, order, page));
+	console.log(api.v3.search(query, order, page)); // TODO: remove
 	const response = await fetch(api.v3.search(query, order, page));
 	if (!response.ok) throw new Error('Failed to fetch videos');
 	return response.json();
