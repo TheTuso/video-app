@@ -27,6 +27,14 @@ interface ControlsProps {
 	onBackward?: () => void;
 }
 
+function formatSecondsToMS(totalSeconds: number) {
+	const secs = Math.floor(totalSeconds);
+	const minutes = Math.floor((secs % 3600) / 60);
+	const seconds = secs % 60;
+	const pad = (n: number) => String(n).padStart(2, '0');
+	return `${pad(minutes)}:${pad(seconds)}`;
+}
+
 export function Controls({
 	duration,
 	currentTime,
@@ -124,14 +132,6 @@ export function Controls({
 			<Progress progress={`${(currentTime / duration) * 100}%`} />
 		</View>
 	);
-}
-
-function formatSecondsToMS(totalSeconds: number) {
-	const secs = Math.floor(totalSeconds);
-	const minutes = Math.floor((secs % 3600) / 60);
-	const seconds = secs % 60;
-	const pad = (n: number) => String(n).padStart(2, '0');
-	return `${pad(minutes)}:${pad(seconds)}`;
 }
 
 const styles = StyleSheet.create({

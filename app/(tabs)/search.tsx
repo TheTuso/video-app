@@ -102,7 +102,7 @@ export default function Search() {
 				<Typography
 					size="label"
 					align="right"
-					onPress={() => setShowModal((prev) => !prev)} // https://docs.expo.dev/versions/latest/sdk/checkbox/
+					onPress={() => setShowModal((prev) => !prev)}
 				>
 					Sort by:{' '}
 					<Typography size="label" font="Poppins_600SemiBold">
