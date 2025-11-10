@@ -91,4 +91,9 @@ const sizes = StyleSheet.create({
 		fontSize: 14,
 		letterSpacing: 0.01,
 	},
+	timeStamp: {
+		fontSize: 10,
+		lineHeight: 12,
+		letterSpacing: 0.01,
+	},
 });
