@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
 	container: {
 		paddingHorizontal: 0,
 		height: '100%',
+		paddingTop: 24,
 	},
 	header: {
 		flexDirection: 'row',
@@ -65,7 +66,6 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 24,
 	},
 	sectionsList: {
-		// height: '100%',
 		marginTop: 24,
 	},
 });

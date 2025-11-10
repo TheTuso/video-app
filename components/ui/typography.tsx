@@ -77,7 +77,7 @@ const sizes = StyleSheet.create({
 		lineHeight: 16,
 		letterSpacing: 0.01,
 	},
-	date: {
+	small: {
 		fontSize: 10,
 		lineHeight: 24,
 		letterSpacing: 0.01,

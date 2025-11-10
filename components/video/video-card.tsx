@@ -45,7 +45,7 @@ export function VideoCard({
 			>
 				{title}
 			</Typography>
-			<Typography font="Poppins_400Regular" size="date" align="right">
+			<Typography font="Poppins_400Regular" size="small" align="right">
 				{format(new Date(publishedAt), 'dd.MM.yyyy')}
 			</Typography>
 		</Pressable>
@@ -73,7 +73,7 @@ const large = StyleSheet.create({
 		gap: 16,
 	},
 	thumbnail: {
-		width: 345,
-		height: 200,
+		width: '100%',
+		aspectRatio: 16 / 9,
 	},
 });

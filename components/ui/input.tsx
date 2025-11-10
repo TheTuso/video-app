@@ -35,8 +35,11 @@ const styles = StyleSheet.create({
 		borderRadius: 16,
 		paddingVertical: 10,
 		paddingHorizontal: 12,
+		alignItems: 'center',
 		gap: 12,
 		flex: 1,
+		maxHeight: 44,
+		minHeight: 44,
 	},
 	input: {
 		fontFamily: 'Poppins_400Regular',
@@ -44,5 +47,7 @@ const styles = StyleSheet.create({
 		lineHeight: 24,
 		letterSpacing: 0.01,
 		color: COLORS.foregroundPrimary,
+		width: '100%',
+		height: '100%',
 	},
 });
