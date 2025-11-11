@@ -9,7 +9,7 @@ export function Button({ fullWidth, children, style, ...props }: ButtonProps) {
 	return (
 		<Pressable
 			{...props}
-			// @ts-ignore
+			// @ts-ignore appending prop style to the Pressable style
 			style={[styles.button, { width: fullWidth ? '100%' : 'auto' }, style]}
 		>
 			{children}
