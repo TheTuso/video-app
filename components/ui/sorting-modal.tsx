@@ -6,14 +6,56 @@ import { RadioGroup } from '@/components/ui/radio-group';
 import { Typography } from '@/components/ui/typography';
 import { COLORS } from '@/utils/colors';
 
+/**
+ * Props for the SortingModal component.
+ */
 interface ModalProps {
+	/** Controls modal visibility */
 	visible?: boolean;
+	/** Callback fired when modal is dismissed (via backdrop tap or close) */
 	onClose?: () => void;
+	/** Callback fired when user confirms selection with the selected value */
 	onSubmit?: (value: string) => void;
+	/** Currently selected option value (pre-fills the radio selection) */
 	selectedOption: string;
+	/** Array of radio button options to display */
 	options: RadioOption[];
 }
 
+/**
+ * Modal component for sorting options selection.
+ * Displays a centered modal with radio button options and a confirm button.
+ *
+ * @example
+ * ```tsx
+ * const [visible, setVisible] = useState(false);
+ * const [sortBy, setSortBy] = useState('viewCount');
+ *
+ * const options = [
+ *   { name: 'Most Views', value: 'viewCount' },
+ *   { name: 'Most Recent', value: 'date' },
+ *   { name: 'Most Relevant', value: 'relevance' },
+ * ];
+ *
+ * <SortingModal
+ *   visible={visible}
+ *   selectedOption={sortBy}
+ *   options={options}
+ *   onSubmit={(value) => {
+ *     setSortBy(value);
+ *     setVisible(false);
+ *   }}
+ *   onClose={() => setVisible(false)}
+ * />
+ * ```
+ *
+ * Features:
+ * - Fade animation on show/hide
+ * - Dismissible by tapping backdrop (resets selection)
+ * - Confirm button applies the selected value
+ * - Centered modal with semi-transparent backdrop
+ * - 80% width, 40% height responsive sizing
+ */
 export function SortingModal({
 	visible = false,
 	onClose,

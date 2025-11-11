@@ -3,6 +3,15 @@ import type { SortOption } from '@/types/videos';
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
 
+/**
+ * Builds a YouTube API URL with query parameters.
+ * Automatically appends the API key to all requests.
+ *
+ * @param path - The API endpoint path (e.g., '/videos', '/search')
+ * @param params - Query parameters to include in the URL (empty/undefined values are omitted)
+ * @returns The complete URL string with query parameters
+ * @throws {Error} If API_URL or API_KEY environment variables are not defined
+ */
 function buildUrl(
 	path: string,
 	params: Record<string, string | undefined> = {},
@@ -44,6 +53,16 @@ const api = {
 	},
 };
 
+/**
+ * Searches for videos on YouTube using the YouTube Data API v3.
+ * Results are filtered to the Science & Technology category (ID: 28).
+ *
+ * @param query - The search query string
+ * @param order - Sort order for results (e.g., 'viewCount', 'date', 'rating')
+ * @param page - Optional page token for pagination (obtained from previous response's nextPageToken)
+ * @returns A promise resolving to the YouTube API search response with video snippets
+ * @throws {Error} If the API request fails
+ */
 export async function searchVideos(
 	query: string,
 	order: SortOption,
@@ -54,6 +73,14 @@ export async function searchVideos(
 	return response.json();
 }
 
+/**
+ * Fetches detailed information for a specific video by ID.
+ * Includes video snippet (title, description, thumbnails) and statistics (views, likes).
+ *
+ * @param id - The YouTube video ID
+ * @returns A promise resolving to the YouTube API video details response
+ * @throws {Error} If the API request fails
+ */
 export async function getVideoDetails(id: string) {
 	const response = await fetch(api.v3.videos(id));
 	if (!response.ok) throw new Error('Failed to fetch video details');

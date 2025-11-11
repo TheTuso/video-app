@@ -17,16 +17,38 @@ import { ControlButton } from '@/components/video/control-button';
 import { Progress } from '@/components/video/progress';
 import { COLORS } from '@/utils/colors';
 
+/**
+ * Props for the Controls component.
+ */
 interface ControlsProps {
+	/** Total video duration in seconds */
 	duration: number;
+	/** Current playback position in seconds */
 	currentTime: number;
+	/** Callback fired when play/pause button is pressed */
 	onPlayPause?: () => void;
+	/** Callback fired when mute button is pressed */
 	onMute?: () => void;
+	/** Callback fired when fullscreen button is pressed */
 	onFullscreen?: () => void;
+	/** Callback fired when forward button is pressed (typically +10s) */
 	onForward?: () => void;
+	/** Callback fired when backward button is pressed (typically -10s) */
 	onBackward?: () => void;
 }
 
+/**
+ * Formats seconds into MM:SS timestamp format.
+ *
+ * @param totalSeconds - The total number of seconds to format
+ * @returns A formatted string in MM:SS format (e.g., "04:32")
+ *
+ * @example
+ * ```tsx
+ * formatSecondsToMS(272)  // Returns "04:32"
+ * formatSecondsToMS(59)   // Returns "00:59"
+ * ```
+ */
 function formatSecondsToMS(totalSeconds: number) {
 	const secs = Math.floor(totalSeconds);
 	const minutes = Math.floor((secs % 3600) / 60);
@@ -35,6 +57,33 @@ function formatSecondsToMS(totalSeconds: number) {
 	return `${pad(minutes)}:${pad(seconds)}`;
 }
 
+/**
+ * Video player controls overlay component.
+ * Displays play/pause, seek, volume, fullscreen, and navigation controls.
+ *
+ * Features:
+ * - Back navigation button (returns to previous screen)
+ * - Play/Pause toggle with icon state
+ * - Forward/Backward seek buttons (+10s/-10s)
+ * - Volume control button
+ * - Airplay button (placeholder, not implemented)
+ * - Fullscreen toggle
+ * - Progress bar with current time / total duration display
+ * - Safe area insets support for notched devices
+ *
+ * @example
+ * ```tsx
+ * <Controls
+ *   duration={300}
+ *   currentTime={150}
+ *   onPlayPause={() => video.playPause()}
+ *   onMute={() => video.mute()}
+ *   onFullscreen={() => video.enterFullscreen()}
+ *   onForward={() => video.seek(currentTime + 10)}
+ *   onBackward={() => video.seek(currentTime - 10)}
+ * />
+ * ```
+ */
 export function Controls({
 	duration,
 	currentTime,
