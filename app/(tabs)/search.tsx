@@ -106,7 +106,7 @@ export default function Search() {
 				>
 					Sort by:{' '}
 					<Typography size="label" font="Poppins_600SemiBold">
-						{OPTIONS.find((option) => option.value === orderBy)?.name ?? 'x'}
+						{OPTIONS.find((option) => option.value === orderBy)?.name}
 					</Typography>
 				</Typography>
 			</View>

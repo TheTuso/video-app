@@ -1,7 +1,7 @@
 import { type ReactNode, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { Typography } from '@/components/ui/typography';
-import { COLORS } from '@/utils/colors';
+import { COLORS, hexa } from '@/utils/colors';
 
 export interface Tab {
 	title: string;
@@ -53,10 +53,10 @@ const styles = StyleSheet.create({
 		paddingVertical: 4,
 		alignItems: 'center',
 		borderBottomWidth: 2,
-		borderBottomColor: `${COLORS.foregroundPrimary}66`,
+		borderBottomColor: hexa(COLORS.foregroundPrimary, 0.4),
 	},
 	tabActive: {
-		borderBottomColor: `${COLORS.foregroundPrimary}`,
+		borderBottomColor: COLORS.foregroundPrimary,
 	},
 	content: {
 		flex: 1,

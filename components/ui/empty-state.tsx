@@ -1,13 +1,13 @@
 import { StyleSheet, View } from 'react-native';
 import { PlayIcon } from '@/components/icons';
 import { Typography } from '@/components/ui/typography';
-import { COLORS } from '@/utils/colors';
+import { COLORS, hexa } from '@/utils/colors';
 
 interface EmptyStateProps {
 	message?: string;
 }
 
-const COLOR = `${COLORS.foregroundPrimary}66`;
+const COLOR = hexa(COLORS.foregroundPrimary, 0.4);
 
 export function EmptyState({ message }: EmptyStateProps) {
 	return (

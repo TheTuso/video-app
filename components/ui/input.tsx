@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { StyleSheet, TextInput, type TextInputProps, View } from 'react-native';
-import { COLORS } from '@/utils/colors';
+import { COLORS, hexa } from '@/utils/colors';
 
 interface InputProps extends TextInputProps {
 	startIcon?: ReactNode;
@@ -20,7 +20,7 @@ export function Input({
 				{...props}
 				placeholder={placeholder}
 				style={styles.input}
-				placeholderTextColor={`${COLORS.foregroundPrimary}99`} // HEX + 99 = hex & 60% opacity (alpha layer)
+				placeholderTextColor={hexa(COLORS.foregroundPrimary, 0.6)}
 			/>
 			{endIcon}
 		</View>

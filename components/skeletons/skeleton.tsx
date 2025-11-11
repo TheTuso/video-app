@@ -1,5 +1,5 @@
 import { StyleSheet, View, type ViewProps } from 'react-native';
-import { COLORS } from '@/utils/colors';
+import { COLORS, hexa } from '@/utils/colors';
 
 export function Skeleton({ style, children, ...props }: ViewProps) {
 	return (
@@ -13,6 +13,6 @@ const styles = StyleSheet.create({
 	skeleton: {
 		width: '100%',
 		height: '100%',
-		backgroundColor: `${COLORS.foregroundPrimary}22`,
+		backgroundColor: hexa(COLORS.foregroundPrimary, 0.2),
 	},
 });
