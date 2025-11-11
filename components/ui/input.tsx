@@ -44,10 +44,9 @@ const styles = StyleSheet.create({
 	input: {
 		fontFamily: 'Poppins_400Regular',
 		fontSize: 16,
-		lineHeight: 24,
 		letterSpacing: 0.01,
 		color: COLORS.foregroundPrimary,
-		width: '100%',
-		height: '100%',
+		flex: 1,
+		paddingVertical: 0,
 	},
 });

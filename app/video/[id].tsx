@@ -64,6 +64,7 @@ export default function VideoScreen() {
 	};
 
 	const toggleControls = () => {
+		console.log('toggleControls');
 		// Clear any existing timeout
 		if (hideControlsTimeoutRef.current) {
 			clearTimeout(hideControlsTimeoutRef.current);
@@ -80,7 +81,7 @@ export default function VideoScreen() {
 
 	return (
 		<SafeAreaView edges={['top', 'bottom']} style={styles.container}>
-			<Pressable onPress={toggleControls}>
+			<View>
 				<Animated.View style={{ opacity: opacityAnim }}>
 					<Video
 						ref={videoRef}
@@ -97,7 +98,11 @@ export default function VideoScreen() {
 						}}
 					/>
 				</Animated.View>
-			</Pressable>
+				<Pressable
+					style={styles.videoOverlay}
+					onPress={toggleControls}
+				/>
+			</View>
 			{showControls && (
 				<Controls
 					currentTime={currentTime}
@@ -155,6 +160,13 @@ const styles = StyleSheet.create({
 	video: {
 		width: '100%',
 		aspectRatio: 16 / 9,
+	},
+	videoOverlay: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
 	},
 	content: {
 		padding: 16,
